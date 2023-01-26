@@ -5,7 +5,7 @@ import { ThreeElements } from "@react-three/fiber"
 
 function Rock({ ...props }) {
   const { scene, materials } = useGLTF("/Rocck.glb") as any
-
+  console.log(materials.default_material)
   useEffect(() => {
     scene.traverse((object: any) => {
       object.castShadow = true

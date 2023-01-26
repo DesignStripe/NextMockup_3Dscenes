@@ -1,13 +1,13 @@
-import { EffectComposer, Bloom, Outline, BrightnessContrast } from "@react-three/postprocessing"
+import { EffectComposer, Bloom, SMAA, BrightnessContrast } from "@react-three/postprocessing"
 import { BlendFunction } from "postprocessing"
+import * as THREE from "three"
 
 export default function PostProcessing() {
   return (
-    <>
-      <EffectComposer disableNormalPass multisampling={8} autoClear={false}>
-        <BrightnessContrast brightness={0.1} contrast={0.05} blendFunction={BlendFunction.SCREEN} />
-        <Bloom luminanceThreshold={1} mipmapBlur intensity={0.1} />
-      </EffectComposer>
-    </>
+    <EffectComposer disableNormalPass={true} multisampling={13} frameBufferType={THREE.HalfFloatType}>
+      <SMAA preset={3} />
+      <Bloom kernelSize={5} intensity={0.1} luminanceSmoothing={0.025} luminanceThreshold={0.5} />
+      <BrightnessContrast contrast={0.35} />
+    </EffectComposer>
   )
 }

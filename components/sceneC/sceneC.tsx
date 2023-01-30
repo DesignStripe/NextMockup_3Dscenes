@@ -6,9 +6,20 @@ import PostPro from "./postpro"
 import { Suspense, useRef, useState } from "react"
 import * as THREE from "three"
 import Loading from "@/components/loading"
+import NextImage from "next/image"
+import iPhoneBlack from "@/public/iPhone_black.png"
+import iPhoneBlue from "@/public/iPhone_blue.png"
+import iPhoneGold from "@/public/iPhone_gold.png"
+import iPhoneWhite from "@/public/iPhone_white.png"
+import iPhoneGreen from "@/public/iPhone_green.png"
+import { HexColorPicker } from "react-colorful"
+import OutsideClickHandler from "react-outside-click-handler"
 
 export default function SceneC() {
   const camRef = useRef()
+  const [bgColor, setBgColor] = useState("#FFC000")
+  const [showColorPanel, setShowColorPanel] = useState(false)
+  const [matIndex, setMatIndex] = useState<number>(0)
 
   return (
     <div className="w-full h-screen relative flex justify-center">
@@ -25,10 +36,72 @@ export default function SceneC() {
             </div>
           </div>
         </div>
+        <div className="absolute bottom-10 z-50">
+          <div className="bg-white p-3 rounded-xl border-2">
+            <div className="flex gap-4 justify-center items-center">
+              <div
+                onClick={() => setShowColorPanel(true)}
+                style={{ backgroundColor: bgColor }}
+                className="relative w-[85px] h-[85px] border-2 border-slate-500  rounded-lg text-[10px] font-medium flex items-center justify-center"
+              >
+                Change color
+                {showColorPanel && (
+                  <OutsideClickHandler onOutsideClick={() => setShowColorPanel(false)}>
+                    <div className="absolute w-[230px] bottom-[110px] bg-white p-4 rounded-xl">
+                      <HexColorPicker color={bgColor} onChange={(e) => setBgColor(e)} />
+                    </div>
+                  </OutsideClickHandler>
+                )}
+              </div>
+              <div className="flex gap-3">
+                <NextImage
+                  onClick={() => setMatIndex(0)}
+                  alt="Iphone Black"
+                  src={iPhoneBlack}
+                  width={90}
+                  height={90}
+                  className="rounded-xl hover:border-4 hover:border-orange-400 transition duration-300 ease-in-out border-4 border-white"
+                />
+                <NextImage
+                  onClick={() => setMatIndex(1)}
+                  alt="Iphone Black"
+                  src={iPhoneBlue}
+                  width={90}
+                  height={90}
+                  className="rounded-xl hover:border-4 hover:border-orange-400 transition duration-300 ease-in-out border-4 border-white"
+                />
+                <NextImage
+                  onClick={() => setMatIndex(2)}
+                  alt="Iphone Black"
+                  src={iPhoneGold}
+                  width={90}
+                  height={90}
+                  className="rounded-xl hover:border-4 hover:border-orange-400 transition duration-300 ease-in-out border-4 border-white"
+                />
+                <NextImage
+                  onClick={() => setMatIndex(3)}
+                  alt="Iphone Black"
+                  src={iPhoneWhite}
+                  width={90}
+                  height={90}
+                  className="rounded-xl hover:border-4 hover:border-orange-400 transition duration-300 ease-in-out border-4 border-white"
+                />
+                <NextImage
+                  onClick={() => setMatIndex(4)}
+                  alt="Iphone Black"
+                  src={iPhoneGreen}
+                  width={90}
+                  height={90}
+                  className="rounded-xl hover:border-4 hover:border-orange-400 transition duration-300 ease-in-out border-4 border-white"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <Canvas gl={{ preserveDrawingBuffer: true, stencil: false, premultipliedAlpha: true, antialias: false }} dpr={3} shadows flat>
-          <color attach="background" args={["#C4CED2"]} />
+          <color attach="background" args={["#f1f1f1"]} />
           <Block />
-          <Backdrop />
+          <Backdrop color={bgColor} />
           <Iphone matIndex={0} />
           <Lighting />
           <PostPro />
@@ -39,7 +112,7 @@ export default function SceneC() {
             minPolarAngle={Math.PI / 1.94}
             target={[0, 5, 0]}
           />
-          <PerspectiveCamera ref={camRef} makeDefault position={[64, 1.8, -4.3]} rotation={new THREE.Euler(-2.5, 1.5, -2.5)} fov={12} />
+          <PerspectiveCamera ref={camRef} makeDefault position={[70, 1, -2.25]} rotation={new THREE.Euler(-2.5, 1.5, -2.5)} fov={12} />
         </Canvas>
       </Suspense>
     </div>

@@ -1,10 +1,11 @@
 import SceneB from "@/components/sceneB/sceneB"
 import SceneC from "@/components/sceneC/sceneC"
 import SceneD from "@/components/sceneD/sceneD"
+import SceneE from "@/components/sceneE/sceneE"
 import { useState } from "react"
 
 export default function Home() {
-  const [scene, setScene] = useState<string>("SceneB")
+  const [scene, setScene] = useState<string>("SceneE")
 
   return (
     <div className="relative">
@@ -18,10 +19,14 @@ export default function Home() {
         <div className="cursor-pointer" onClick={() => setScene("SceneD")}>
           Iphone Studio
         </div>
+        <div className="cursor-pointer" onClick={() => setScene("SceneE")}>
+          PostPro Comparison
+        </div>
       </div>
       {scene === "SceneB" && <SceneB />}
       {scene === "SceneC" && <SceneC />}
       {scene === "SceneD" && <SceneD />}
+      {scene === "SceneE" && <SceneE />}
     </div>
   )
 }
